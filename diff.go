@@ -278,10 +278,14 @@ func (cl *Changelog) Add(t string, path []string, ftco ...interface{}) {
 
 func tagName(tag string, f reflect.StructField) string {
 	t := f.Tag.Get(tag)
-
+	
 	parts := strings.Split(t, ",")
 	if len(parts) < 1 {
 		return "-"
+	}
+	
+	if tag == "diff" && t == "" {
+		t = f.Tag.Get("json")
 	}
 
 	return parts[0]
